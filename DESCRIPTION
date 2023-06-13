@@ -1,0 +1,15 @@
+Package: survivalContour
+Type: Package
+Title: Predicted Survival Contour Plot for Flexible Survival Models
+Version: 1.0
+Date: 2023-06-09
+Author: Yushu Shi
+Maintainer: Yushu Shi <shiyushu2006@gmail.com>
+Description: We provide survivalContour as a package to show the predicted survival or cumulative incidence function (for competing risks data) over time with a single continuous covariate in the form of contour plot or 3D contour plot. The estimate for survival probability (or cumulative incidence function) can be based on various models, including deep neural network based survival models. The package allows statified survival analysis and incorporates recent developments for interval censored data.
+License: GPL (>= 2)
+Depends: R (>= 3.5.0), plotly
+Imports: riskRegression, prodlim, survival, intccr, mets, reticulate, survivalmodels, rlist, flexsurv
+NeedsCompilation: no
+Repository: CRAN
+RoxygenNote: 7.2.3
+Encoding: UTF-8
