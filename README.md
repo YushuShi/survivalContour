@@ -44,7 +44,7 @@ A colored contour plot showing the association between survival time and continu
 
 ## Details
 
-| Model | Package | Object |Confidence interval in 3D plot|
+| Model | Package | survivalContour function Input object type |Confidence interval in 3D plot|
   |---------|---------|---------|---------|
   | Cox model| survival| coxph | Y |
   | stratified Cox model| survival |coxph| Y |
