@@ -36,7 +36,7 @@ coxStrataContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,
     }
     plotList[[2*i-1]]<-temp
     histData<-data[data[,strataVar]==strataList[i],contCov]
-    temp2 <- plot_ly(y = histData, type = "histogram",hoverinfo='none',showlegend=FALSE)
+    temp2 <- plot_ly(y = histData, type = "histogram",hoverinfo='none',showlegend=FALSE)%>% layout(xaxis=list(title="Count"))
     temp2 <- temp2 %>% add_annotations(x=0.5,y=1.05,
                                        yref = "paper",
                                        xref = "paper",
