@@ -113,7 +113,7 @@ survivalContour(data,coxResult,"cont")
 survivalContour(data,coxResult,"cont",D3=TRUE)
 survivalContour(data,coxResult,"cont",D3=TRUE,CI3D=TRUE)
 
-# This has problems
+
 coxResult<-phreg(Surv(lower,upper,type="interval2")~cont+strata(treat),data=data)
 survivalContour(data,coxResult,"cont")
 survivalContour(data,coxResult,"cont",D3=TRUE)
