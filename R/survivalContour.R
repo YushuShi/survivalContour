@@ -175,6 +175,11 @@
 #'
 #' survivalContour(data1,trainModel,"resp")
 #' survivalContour(data1,trainModel,"resp",D3=TRUE)
+#'
+#' data(veteran,package="randomForestSRC")
+#' veteran.grow<-rfsrc(Surv(time,status)~.,veteran,ntree=100)
+#' survivalContour(veteran,veteran.grow,"karno")
+#' survivalContour(veteran,veteran.grow,"karno",D3=TRUE)
 
 survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NULL,nCovEval=30,otherCov=NULL,strataName=NULL){
   Plot<-NULL
@@ -243,7 +248,15 @@ survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NUL
                 Plot<-pycoxContour3D(data,model,contCov,contCovName,nCovEval,otherCov)
               }
             }else{
-              print("The model provided cannot be handled by survivalContour package.")
+              if(sum(grepl("rfsrc",class(model)))){
+                if(!D3){
+                  Plot<-rfsrcContour(data,model,contCov,contCovName,nCovEval,otherCov)
+                }else{
+                  Plot<-rfsrcContour3D(data,model,contCov,contCovName,nCovEval,otherCov)
+                }
+              }else{
+                print("The model provided cannot be handled by survivalContour package.")
+              }
             }
           }
         }
