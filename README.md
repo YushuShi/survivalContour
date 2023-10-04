@@ -53,7 +53,8 @@ A colored contour plot showing the association between survival time and continu
   | parametric and spline model | flexsurv | flexsurvreg|Y |
   | Fine and Gray model for competing risks data | riskRegression+prodlim | FRG|N |
   | Fine and Gray model for competing risks data with interval censored data|intccr |ciregic| N |
-  |coxtime,deepsurv,deephit,loghaz,pchazard| reticulate+survivalmodels|pycox|N|
+  |random survival forest| randomForestSRC|pycox|N|
+  |coxtime,deepsurv,deephit,loghaz,pchazard| reticulate+survivalmodels|rfsrc|N|
 
 ## Reference
 Shi Y, Zhang L, Do KA, Jenq RR, Peterson CB (2023) survivalContour: Visualizing predicted survival for continuous covariate via colored contour plot
@@ -218,4 +219,11 @@ trainModel<-pchazard(data=data1,frac=0.2,
 
 survivalContour(data1,trainModel,"resp")
 survivalContour(data1,trainModel,"resp",D3=TRUE)
+
+########################
+
+ data(veteran,package="randomForestSRC")
+ veteran.grow<-rfsrc(Surv(time,status)~.,veteran,ntree=100)
+ survivalContour(veteran,veteran.grow,"karno")
+ survivalContour(veteran,veteran.grow,"karno",D3=TRUE)
 ```
