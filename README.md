@@ -3,7 +3,7 @@
 # CAT
 
 ## General info
-Show the predicted survival or cumulative incidence function (competing risks data) over time for single continuous covariate in the form of contour plot or 3D contour plot. The estimate for survival probability and cumulative incidence function(CIF) are based on various survival models. The models that survivalContour supports are listed below:
+Show the predicted survival or cumulative incidence function (competing risks data) over time for single continuous covariate in the form of contour plot or 3D contour plot. The estimate for survival probability and cumulative incidence function(CIF) are based on various survival models. The models that survivalContour supports are listed below. The corresponding R shiny app is availble at [survivalContourRshinyapp](https://yushushi.shinyapps.io/survivalContour/).
 
 ## Usage
 
@@ -53,8 +53,8 @@ A colored contour plot showing the association between survival time and continu
   | parametric and spline model | flexsurv | flexsurvreg|Y |
   | Fine and Gray model for competing risks data | riskRegression+prodlim | FRG|N |
   | Fine and Gray model for competing risks data with interval censored data|intccr |ciregic| N |
-  |random survival forest| randomForestSRC|pycox|N|
-  |coxtime,deepsurv,deephit,loghaz,pchazard| reticulate+survivalmodels|rfsrc|N|
+  |random survival forest| randomForestSRC|rfsrc|N|
+  |coxtime,deepsurv,deephit,loghaz,pchazard| reticulate+survivalmodels|pycox|N|
 
 ## Reference
 Shi Y, Zhang L, Do KA, Jenq RR, Peterson CB (2023) survivalContour: Visualizing predicted survival for continuous covariate via colored contour plot
