@@ -204,8 +204,17 @@ trainModel<-pchazard(data=data1,frac=0.2,
 survivalContour(data1,trainModel,"resp")
 survivalContour(data1,trainModel,"resp",D3=TRUE)
 
-data(veteran,package="randomForestSRC")
-veteran.grow<-rfsrc(Surv(time,status)~.,veteran,ntree=100)
-survivalContour(veteran,veteran.grow,"karno")
-survivalContour(veteran,veteran.grow,"karno",D3=TRUE)
+dataPath<-system.file("extdata","data1.csv",
+package = "survivalContour")
+data1<-read.csv(dataPath)
+data1$num_comorb<-factor(data1$num_comorb)
+data1$race<-factor(data1$race)
+data1$cancer<-factor(data1$cancer)
+data1$diab<-factor(data1$diab)
+data1$sex<-factor(data1$sex)
+data1$dementia<-factor(data1$dementia)
+model1<-rfsrc(Surv(duration,event)~.,data1)
+survivalContour(data1,model1,"resp",contCovName = "Respiratory rate")
+survivalContour(data1,model1,"resp",contCovName = "Respiratory rate",
+                D3=TRUE)
 }
