@@ -1,7 +1,7 @@
 # survivalContour
 
 ## General info
-Show the predicted survival or cumulative incidence function (competing risks data) over time for single continuous covariate in the form of contour plot or 3D contour plot. The estimate for survival probability and cumulative incidence function(CIF) are based on various survival models. The models that survivalContour supports are listed below. The corresponding R shiny app is availble at [survivalContourRshinyapp](https://github.com/YushuShi/survivalContourRshiny).
+Show the predicted survival or cumulative incidence function (competing risks data) over time for single continuous covariate in the form of contour plot or 3D contour plot. The estimate for survival probability and cumulative incidence function(CIF) are based on various survival models. The models that survivalContour supports are listed below. The corresponding R shiny app is availble at [survivalContourRshinyapp](https://biostatistics.mdanderson.org/shinyapps/survivalContour/).
 
 ## Install
 
