@@ -84,15 +84,17 @@ library(reticulate)
 library(survivalmodels)
 library(survivalContour)
 library(survival)
+library(randomForestSRC)
+
 # Cox model without interval censoring
 dataPath<-system.file("extdata","veteran.csv",
                       package = "survivalContour")
 data<-read.csv(dataPath,row.names = 1)
-coxResult<-coxph(Surv(time,status)~PRS+age+diagtime,data=data)
+coxResult<-coxph(Surv(time,status)~karno+age+diagtime,data=data)
 
-survivalContour(data,coxResult,"PRS")
-survivalContour(data,coxResult,"PRS",D3=TRUE)
-survivalContour(data,coxResult,"PRS",D3=TRUE,CI3D=TRUE)
+survivalContour(data,coxResult,"karno")
+survivalContour(data,coxResult,"karno",D3=TRUE)
+survivalContour(data,coxResult,"karno",D3=TRUE,CI3D=TRUE)
 
 paraResult<-flexsurvreg(Surv(time,status)~.,data=data,dist="weibull")
 survivalContour(data,paraResult,"karno")
