@@ -8,5 +8,8 @@ s <- subplot(fig,
              shareY = TRUE,
              titleX=TRUE,
              titleY=TRUE)
+s <- s %>% layout(
+  margin = list(t = 50,l=5) # Adjust top margin to ensure enough space for the title
+)
 s
 }

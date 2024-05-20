@@ -10,9 +10,14 @@ contourPart<-function(x,y,z,contCovName,competingIndi=FALSE){
   )
   fig <- fig %>% layout(title=list(text=
                         paste("Contour Plot of the Predicted",
-                        ifelse(competingIndi,"Cumulative Incidence Function","Survival Probability"))
-                        ,x=0.15),
-                        xaxis=list(title="Time",range=c(0,max(x))),
-                        yaxis=list(title=contCovName,range=range(y)))
+                        ifelse(competingIndi,"Cumulative Incidence Function","Survival Probability")),
+                        font=list(size=20),
+                        x=0.15),
+                        xaxis=list(title="Time",
+                                   font=list(size=20),
+                                   range=c(0,max(x))),
+                        yaxis=list(title=contCovName,
+                                   font=list(size=20),
+                                   range=range(y)))
   fig
 }

@@ -13,7 +13,8 @@ survivalContour(
   contCovName = NULL,
   nCovEval = 30,
   otherCov = NULL,
-  strataName = NULL
+  strataName = NULL,
+  ncore = 2L
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ survivalContour(
 \item{otherCov}{A vector of values of other covariates except for the continuous covariate used to generate contour plot. The default value is NULL, and the mean of continuous covariates and the most frequent values of categorical covariates are used.}
 
 \item{strataName}{The print name of the stratifying covariate used in stratified Cox model. If not provided by the user, "survivalContour" will use the name of the stratifying covariate.}
+
+\item{ncore}{The number of cores used in random forest model. Only meaningful for random forests model.}
 }
 \value{
 The result of the function.

@@ -21,6 +21,7 @@
 #' @param nCovEval Number of covaraite values where predicted survival is evaluated.
 #' @param otherCov A vector of values of other covariates except for the continuous covariate used to generate contour plot. The default value is NULL, and the mean of continuous covariates and the most frequent values of categorical covariates are used.
 #' @param strataName The print name of the stratifying covariate used in stratified Cox model. If not provided by the user, "survivalContour" will use the name of the stratifying covariate.
+#' @param ncore The number of cores used in random forest model. Only meaningful for random forests model.
 #' @return The result of the function.
 #' @export
 #' @examples
@@ -190,7 +191,7 @@
 #' survivalContour(data1,model1,"resp",contCovName = "Respiratory rate",
 #'                 D3=TRUE)
 
-survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NULL,nCovEval=30,otherCov=NULL,strataName=NULL){
+survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NULL,nCovEval=30,otherCov=NULL,strataName=NULL,ncore=2L){
   Plot<-NULL
   if(identical(class(model),"coxph")){
     # this is a Cox model without interval censored data
@@ -258,6 +259,7 @@ survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NUL
               }
             }else{
               if(sum(grepl("rfsrc",class(model)))){
+                options(rf.cores=ncore, mc.cores=ncore)
                 if(!D3){
                   Plot<-rfsrcContour(data,model,contCov,contCovName,nCovEval,otherCov)
                 }else{
