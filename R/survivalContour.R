@@ -135,20 +135,6 @@
 #' survivalContour(data1,trainModel,"resp")
 #' survivalContour(data1,trainModel,"resp",D3=TRUE)
 #'
-#' trainModel<-coxtime(data=data1,frac=0.2,
-#'                     activation="relu",
-#'                     num_nodes=c(64L,64L),
-#'                     dropout=0.2,
-#'                     early_stopping=TRUE,
-#'                     epochs=1000L,
-#'                     patience=50L,
-#'                     batch_norm = TRUE,
-#'                     batch_size=256L,
-#'                     shuffle=TRUE)
-#'
-#' survivalContour(data1,trainModel,"resp")
-#' survivalContour(data1,trainModel,"resp",D3=TRUE)
-#'
 #' trainModel<-loghaz(data=data1,frac=0.2,
 #'                    activation="relu",
 #'                    num_nodes=c(64L,64L),
