@@ -14,10 +14,10 @@ contourPart<-function(x,y,z,contCovName,competingIndi=FALSE){
                         font=list(size=20),
                         x=0.15),
                         xaxis=list(title="Time",
-                                   font=list(size=20),
+                                   font=list(size=24),
                                    range=c(0,max(x))),
                         yaxis=list(title=contCovName,
-                                   font=list(size=20),
+                                   font=list(size=24),
                                    range=range(y)))
   fig
 }
