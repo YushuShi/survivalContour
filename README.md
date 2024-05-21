@@ -60,7 +60,7 @@ A colored contour plot showing the association between survival time and continu
   | Fine and Gray model for competing risks data | riskRegression+prodlim | FRG|N |
   | Fine and Gray model for competing risks data with interval censored data|intccr |ciregic| N |
   |random survival forest| randomForestSRC|rfsrc|N|
-  |coxtime,deepsurv,deephit,loghaz,pchazard| reticulate+survivalmodels|pycox|N|
+  |deepsurv,deephit,loghaz,pchazard| reticulate+survivalmodels|pycox|N|
 
 ## Reference
 Shi Y, Zhang L, Do KA, Jenq RR, Peterson CB (2023) survivalContour: Visualizing predicted survival for continuous covariate via colored contour plot
