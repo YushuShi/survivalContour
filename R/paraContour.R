@@ -2,7 +2,7 @@
 #' @import flexsurv
 #' @importFrom rlist list.stack
 
-paraContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL){
+paraContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL, drawHistogram = TRUE){
   if(is.null(otherCov)){
     newData<-data.frame(data[1,])
     for(i in 1:ncol(data)){
@@ -33,6 +33,6 @@ paraContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,other
     contCovName<-contCov
   }
   histData<-data[,contCov]
-  s<-survContour(time,newData[,contCov],z,histData,contCovName)
+  s<-survContour(time,newData[,contCov],z,histData,contCovName, drawHistogram = drawHistogram)
   s
 }

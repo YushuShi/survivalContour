@@ -1,6 +1,6 @@
 #' @importFrom stats quantile
 #' @import intccr
-FGIntContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL){
+FGIntContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL, drawHistogram = TRUE){
   if(is.null(otherCov)){
     newData<-data.frame(data[1,])
     for(i in 1:ncol(data)){
@@ -26,6 +26,6 @@ FGIntContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,othe
     contCovName<-contCov
   }
   histData<-data[,contCov]
-  s<-survContour(ctime,y,predMat,histData,contCovName,competingIndi=TRUE)
+  s<-survContour(ctime,y,predMat,histData,contCovName,competingIndi=TRUE, drawHistogram = drawHistogram)
   s
 }

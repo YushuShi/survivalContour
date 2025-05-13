@@ -1,7 +1,7 @@
 #' @importFrom stats quantile
 #' @import reticulate
 #' @import survivalmodels
-pycoxContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL){
+pycoxContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL, drawHistogram = TRUE){
   if(is.null(otherCov)){
     newData<-data.frame(data[1,])
     for(i in 1:ncol(data)){
@@ -22,7 +22,7 @@ pycoxContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,othe
   histData<-data[,contCov]
   s<-survContour(as.numeric(colnames(predictOutcome)),
                  newData2[,contCov],
-                 predictOutcome,histData,contCovName)
-
+                 predictOutcome,histData,contCovName, drawHistogram = drawHistogram)
+  
   s
 }

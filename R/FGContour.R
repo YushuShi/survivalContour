@@ -1,7 +1,7 @@
 #' @importFrom stats quantile
 #' @importFrom riskRegression predictRisk
 
-FGContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL){
+FGContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL, drawHistogram = TRUE){
   if(is.null(otherCov)){
     newData<-data.frame(data[1,])
     for(i in 1:ncol(data)){
@@ -26,6 +26,6 @@ FGContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCo
     contCovName<-contCov
   }
   histData<-data[,contCov]
-  s<-survContour(ctime,newData[,contCov],pred,histData,contCovName,competingIndi=TRUE)
+  s<-survContour(ctime,newData[,contCov],pred,histData,contCovName,competingIndi=TRUE, drawHistogram = drawHistogram)
   s
 }
