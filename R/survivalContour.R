@@ -177,19 +177,19 @@
 #' survivalContour(data1,model1,"resp",contCovName = "Respiratory rate",
 #'                 D3=TRUE)
 
-survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NULL,nCovEval=30,otherCov=NULL,strataName=NULL,ncore=2L){
+survivalContour <- function(data, model, contCov, D3 = FALSE, CI3D = FALSE, contCovName = NULL, nCovEval = 30, otherCov = NULL, strataName = NULL, ncore = 2L, drawHistogram = TRUE) {
   Plot<-NULL
   if(identical(class(model),"coxph")){
     # this is a Cox model without interval censored data
     if(!D3){
-      Plot<-coxContour(data,model,contCov,contCovName,nCovEval,otherCov)
+      Plot <- coxContour(data, model, contCov, contCovName, nCovEval, otherCov, drawHistogram = drawHistogram)
     }else{
       Plot<-cox3DContour(data,model,contCov,contCovName,nCovEval,otherCov,CI3D)
     }
     if(grepl("strata\\(",paste(deparse(model$formula),collapse=""))){
       # this is a stratified Cox model
       if(!D3){
-        Plot<-coxStrataContour(data,model,contCov,contCovName,nCovEval,otherCov,strataName)
+        Plot<-coxStrataContour(data,model,contCov,contCovName,nCovEval,otherCov,strataName, drawHistogram = drawHistogram)
       }else{
         Plot<-coxStrata3DContour(data,model,contCov,contCovName,nCovEval,otherCov,strataName,CI3D)
       }
@@ -198,32 +198,32 @@ survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NUL
     if(identical(class(model),"phreg")){
       if(model$nstrata==1){
         # this is a Cox model with interval censored data
-          if(!D3){
-            Plot<-coxIntContour(data,model,contCov,contCovName,nCovEval,otherCov)
-          }else{
-            Plot<-coxIntContour3D(data,model,contCov,contCovName,nCovEval,otherCov,CI3D)
-          }
+        if(!D3){
+          Plot<-coxIntContour(data,model,contCov,contCovName,nCovEval,otherCov, drawHistogram = drawHistogram)
         }else{
+          Plot<-coxIntContour3D(data,model,contCov,contCovName,nCovEval,otherCov,CI3D)
+        }
+      }else{
         # this is a stratified Cox model with interval censored data
-          if(!D3){
-            Plot<-coxIntStrataContour(data,model,contCov,contCovName,nCovEval,otherCov,strataName)
-          }else{
-            Plot<-coxIntStrataContour3D(data,model,contCov,contCovName,nCovEval,otherCov,strataName,CI3D)
-          }
+        if(!D3){
+          Plot<-coxIntStrataContour(data,model,contCov,contCovName,nCovEval,otherCov,strataName, drawHistogram = drawHistogram)
+        }else{
+          Plot<-coxIntStrataContour3D(data,model,contCov,contCovName,nCovEval,otherCov,strataName,CI3D)
+        }
       }
     }else{
       if(identical(class(model),"flexsurvreg")){
         # This is a parametric model
         if(!D3){
-            Plot<-paraContour(data,model,contCov,contCovName,nCovEval,otherCov)
-          }else{
-            Plot<-paraContour3D(data,model,contCov,contCovName,nCovEval,otherCov,CI3D)
-          }
+          Plot<-paraContour(data,model,contCov,contCovName,nCovEval,otherCov, drawHistogram = drawHistogram)
+        }else{
+          Plot<-paraContour3D(data,model,contCov,contCovName,nCovEval,otherCov,CI3D)
+        }
       }else{
         if(identical(class(model),"FGR")){
           # a Fine and Gray model without interval censored data
           if(!D3){
-            Plot<-FGContour(data,model,contCov,contCovName,nCovEval,otherCov)
+            Plot<-FGContour(data,model,contCov,contCovName,nCovEval,otherCov, drawHistogram = drawHistogram)
           }else{
             Plot<-FGContour3D(data,model,contCov,contCovName,nCovEval,otherCov)
           }
@@ -231,7 +231,7 @@ survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NUL
           if(identical(class(model),"ciregic")){
             # a Fine and Gray model with interval censored data
             if(!D3){
-              Plot<-FGIntContour(data,model,contCov,contCovName,nCovEval,otherCov)
+              Plot<-FGIntContour(data,model,contCov,contCovName,nCovEval,otherCov, drawHistogram = drawHistogram)
             }else{
               Plot<-FGIntContour3D(data,model,contCov,contCovName,nCovEval,otherCov)
             }
@@ -239,7 +239,7 @@ survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NUL
             if(sum(grepl("pycox",class(model)))){
               # result using deep neural network
               if(!D3){
-                Plot<-pycoxContour(data,model,contCov,contCovName,nCovEval,otherCov)
+                Plot<-pycoxContour(data,model,contCov,contCovName,nCovEval,otherCov, drawHistogram = drawHistogram)
               }else{
                 Plot<-pycoxContour3D(data,model,contCov,contCovName,nCovEval,otherCov)
               }
@@ -247,7 +247,7 @@ survivalContour<-function(data,model,contCov,D3=FALSE,CI3D=FALSE,contCovName=NUL
               if(sum(grepl("rfsrc",class(model)))){
                 options(rf.cores=ncore, mc.cores=ncore)
                 if(!D3){
-                  Plot<-rfsrcContour(data,model,contCov,contCovName,nCovEval,otherCov)
+                  Plot<-rfsrcContour(data,model,contCov,contCovName,nCovEval,otherCov, drawHistogram = drawHistogram)
                 }else{
                   Plot<-rfsrcContour3D(data,model,contCov,contCovName,nCovEval,otherCov)
                 }
