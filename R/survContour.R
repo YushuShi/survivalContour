@@ -1,6 +1,6 @@
 #' @importFrom plotly subplot plot_ly
 
-survContour<-function(x,y,z,histData,contCovName,competingIndi=FALSE){
+survContour <- function(x, y, z, histData, contCovName, competingIndi = FALSE, drawHistogram = TRUE) {
 fig<-contourPart(x,y,z,contCovName,competingIndi)
 if (drawHistogram) {
   s <- subplot(
