@@ -1,0 +1,163 @@
+---
+title: "test"
+author: "Hanzhi Chen"
+date: "2025-04-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# package
+```{r}
+library(devtools)
+library(mets)
+library(flexsurv)
+library(prodlim)
+library(riskRegression)
+library(intccr)
+library(reticulate)
+library(survivalmodels)
+#library(survivalContour)
+devtools::load_all(".")
+library(survival)
+library(randomForestSRC)
+```
+
+# coxContour
+```{r}
+# Cox model without interval censoring
+dataPath<-system.file("extdata","veteran.csv",
+                      package = "survivalContour")
+data<-read.csv(dataPath,row.names = 1)
+coxResult<-coxph(Surv(time,status)~karno+age+diagtime,data=data)
+```
+
+```{r}
+survivalContour(data,coxResult,"karno")
+survivalContour(data,coxResult,"karno", drawHistogram = FALSE)
+```
+
+# coxIntContour
+```{r}
+dataPath <- system.file("extdata", "bcdeter2.csv", package = "survivalContour")
+data <- read.csv(dataPath, row.names = 1)
+coxResult <- phreg(Surv(lower, upper, type = "interval2") ~ cont + treat, data = data)
+
+survivalContour(data, coxResult, "cont")
+survivalContour(data,coxResult,"cont", drawHistogram = FALSE)
+```
+
+# coxStrataContour
+```{r}
+dataPath<-system.file("extdata","veteran2.csv",
+                      package = "survivalContour")
+data<-read.csv(dataPath,row.names = 1)
+coxResult<-coxph(Surv(time,status)~.-celltype+strata(celltype),data=data)
+survivalContour(data,coxResult,"karno")
+survivalContour(data,coxResult,"karno", drawHistogram = FALSE)
+```
+
+# coxIntStrataContour
+```{r}
+dataPath<-system.file("extdata","bcdeter2.csv",
+                      package = "survivalContour")
+data<-read.csv(dataPath,row.names = 1)
+
+coxResult<-phreg(Surv(lower,upper,type="interval2")~cont+strata(treat),data=data)
+survivalContour(data,coxResult,"cont")
+survivalContour(data,coxResult,"cont", drawHistogram = FALSE)
+```
+
+# FGContour
+```{r}
+dataPath<-system.file("extdata","Paquid.csv",
+                      package = "survivalContour")
+data<-read.csv(dataPath,row.names = 1)
+FGResult<-FGR(Hist(time,status)~DSST+MMSE,data=data,cause=1)
+survivalContour(data,FGResult,"DSST")
+survivalContour(data,FGResult,"DSST", drawHistogram = FALSE)
+```
+
+# FGIntContour
+```{r}
+dataPath<-system.file("extdata","sim1234.csv",
+                      package = "survivalContour")
+data<-read.csv(dataPath,row.names = 1)
+FGResult<-ciregic(intccr::Surv2(v=lower,u=upper,event=event)~continuousCov,data=data,alpha = c(0, 1), nboot = 0, do.par = FALSE)
+survivalContour(data,FGResult,"continuousCov")
+survivalContour(data,FGResult,"continuousCov", drawHistogram = FALSE)
+```
+
+# paraContour
+```{r}
+dataPath <- system.file("extdata", "veteran.csv", package = "survivalContour")
+data <- read.csv(dataPath, row.names = 1)
+
+paraResult <- flexsurvreg(Surv(time, status) ~ ., data = data, dist = "weibull")
+
+survivalContour(data, paraResult, "karno")
+survivalContour(data, paraResult, "karno", drawHistogram = FALSE)
+```
+
+# pycoxContour
+###```{r}
+reticulate::py_install("pycox", pip = TRUE)
+###```
+
+###```{r}
+reticulate::py_install("numpy==1.21", pip = TRUE)
+devtools::load_all(".")
+###```
+
+###```{r}
+dataPath <- system.file("extdata", "data1.csv", package = "survivalContour")
+data1 <- read.csv(dataPath)
+
+data1$num_comorb <- factor(data1$num_comorb)
+data1$race <- factor(data1$race)
+data1$cancer <- factor(data1$cancer)
+data1$diab <- factor(data1$diab)
+data1$sex <- factor(data1$sex)
+data1$dementia <- factor(data1$dementia)
+data1$time <- NULL
+data1$status <- data1$event
+data1$event <- NULL
+
+trainModel <- deepsurv(data = data1, frac = 0.2,
+                       activation = "relu",
+                       num_nodes = c(64L, 64L),
+                       dropout = 0.2,
+                       early_stopping = TRUE,
+                       epochs = 1000L,
+                       patience = 50L,
+                       batch_norm = TRUE,
+                       batch_size = 256L,
+                       shuffle = TRUE)
+
+survivalContour(data1, trainModel, "resp")
+survivalContour(data1, trainModel, "resp", drawHistogram = FALSE)
+###```
+
+# rfsrcContour
+```{r}
+dataPath <- system.file("extdata", "data1.csv", package = "survivalContour")
+data1 <- read.csv(dataPath)
+
+# 预处理
+data1$num_comorb <- factor(data1$num_comorb)
+data1$race <- factor(data1$race)
+data1$cancer <- factor(data1$cancer)
+data1$diab <- factor(data1$diab)
+data1$sex <- factor(data1$sex)
+data1$dementia <- factor(data1$dementia)
+
+# Random forest model
+model1 <- rfsrc(Surv(duration, event) ~ ., data = data1)
+
+# 调用画图
+survivalContour(data1, model1, "resp", contCovName = "Respiratory rate")
+survivalContour(data1, model1, "resp", contCovName = "Respiratory rate", drawHistogram = FALSE)
+```
+
