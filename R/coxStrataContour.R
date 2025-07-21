@@ -1,6 +1,6 @@
 #' @importFrom stats quantile
 #' @importFrom plotly '%>%' hide_colorbar plot_ly add_annotations subplot
-coxStrataContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL,strataName=NULL){
+coxStrataContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL,strataName=NULL, drawHistogram = TRUE){
   strataVar<-names(trainModel$xlevels)[1]
   strataList<-trainModel$xlevels[[1]]
   plotList<-NULL
@@ -34,26 +34,41 @@ coxStrataContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,
     if(i>1){
       temp<-temp %>% hide_colorbar()
     }
-    plotList[[2*i-1]]<-temp
-    histData<-data[data[,strataVar]==strataList[i],contCov]
-    temp2 <- plot_ly(y = histData, type = "histogram",hoverinfo='none',showlegend=FALSE)%>% layout(xaxis=list(title="Count"))
-    temp2 <- temp2 %>% add_annotations(x=0.5,y=1.05,
-                                       yref = "paper",
-                                       xref = "paper",
-                                       text=paste(strataName,strataList[i]),
-                                       xanchor = "middle",
-                                       yanchor = "top",
-                                       showarrow=FALSE)
-    plotList[[2*i]]<-temp2
+    
+    if (drawHistogram) {
+      plotList[[2*i - 1]] <- temp
+      histData <- data[data[[strataVar]] == strataList[i], contCov]
+      temp2 <- plot_ly(y = histData, type = "histogram", hoverinfo = 'none', showlegend = FALSE) %>%
+        layout(xaxis = list(title = "Count")) %>%
+        add_annotations(x = 0.5, y = 1.05, xref = "paper", yref = "paper",
+                        text = paste(strataName, strataList[i]),
+                        xanchor = "middle",
+                        yanchor = "top",
+                        showarrow = FALSE)
+      plotList[[2*i]] <- temp2
+    } else {
+      plotList[[i]] <- temp
+    }
   }
-  s <- subplot(plotList,
-               nrows = length(strataList),
-               #ncol=2,
-               widths = c(0.8, 0.2),
-               margin=c(0,0.01,0.02,0),
-               shareX=TRUE,
-               shareY=TRUE,titleX = TRUE,titleY = TRUE)
-
+  
+  if (drawHistogram) {
+    s <- subplot(plotList,
+                 nrows = length(strataList),
+                 widths = c(0.8, 0.2),
+                 margin = c(0, 0.01, 0.02, 0),
+                 shareX = TRUE,
+                 shareY = TRUE,
+                 titleX = TRUE,
+                 titleY = TRUE)
+  } else {
+    s <- subplot(plotList,
+                 nrows = length(strataList),
+                 margin = c(0.01, 0.01, 0.02, 0),
+                 shareY = TRUE,
+                 titleX = TRUE,
+                 titleY = TRUE)
+  }
+  
   s
 
 }

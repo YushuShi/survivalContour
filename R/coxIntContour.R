@@ -1,6 +1,6 @@
 #' @importFrom stats quantile
 
-coxIntContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL){
+coxIntContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL, drawHistogram = TRUE){
   if(is.null(otherCov)){
     newData<-data.frame(data[1,])
     for(i in 1:ncol(data)){
@@ -25,6 +25,6 @@ coxIntContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,oth
     contCovName<-contCov
   }
   histData<-data[,contCov]
-  s<-survContour(ctime,newData[,contCov],predictPlot$surv,histData,contCovName)
+  s<-survContour(ctime,newData[,contCov],predictPlot$surv,histData,contCovName,drawHistogram = drawHistogram)
   s
 }

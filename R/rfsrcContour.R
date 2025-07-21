@@ -2,7 +2,7 @@
 #' @importFrom dplyr mutate all_of across
 #' @import randomForestSRC
 
-rfsrcContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL){
+rfsrcContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL, drawHistogram = TRUE){
   if(is.null(otherCov)){
     newData<-data.frame(data[1,])
     for(i in 1:ncol(data)){
@@ -34,7 +34,7 @@ rfsrcContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,othe
 
   s<-survContour(timeX,
                  newData2[,contCov],
-                 contourZ,histData,contCovName)
-
+                 contourZ,histData,contCovName, drawHistogram = drawHistogram)
+  
   s
 }

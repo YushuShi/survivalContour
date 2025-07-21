@@ -1,7 +1,7 @@
 #' @importFrom stats quantile
 #' @importFrom plotly '%>%'
 #
-coxContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherCov=NULL){
+coxContour <- function(data, trainModel, contCov, contCovName = NULL, nCovEval = 30, otherCov = NULL, drawHistogram = TRUE) {
   if(is.null(otherCov)){
     newData<-data.frame(data[1,])
     for(i in 1:ncol(data)){
@@ -19,6 +19,6 @@ coxContour<-function(data,trainModel,contCov,contCovName=NULL,nCovEval=30,otherC
     contCovName<-contCov
   }
   histData<-data[,contCov]
-  s<-survContour(predictOutcome$time,newData[,contCov],t(predictOutcome$surv),histData,contCovName)
+  s <- survContour(predictOutcome$time, newData[, contCov], t(predictOutcome$surv), histData, contCovName, drawHistogram = drawHistogram)
   s
 }
